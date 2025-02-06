@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, Suspense, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { 
@@ -124,17 +124,25 @@ const techStack = [
   }
 ];
 
-export function TechStack() {
+function TechStackContent() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [mounted, setMounted] = useState(false);
   
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+
+  // Don't render anything until mounted
+  if (!mounted) return null;
 
   return (
     <section ref={containerRef} className="relative py-16 md:py-32 overflow-hidden">
@@ -295,5 +303,28 @@ export function TechStack() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+// Error boundary wrapper
+export function TechStack() {
+  return (
+    <Suspense fallback={
+      <div className="relative py-16 md:py-32 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="animate-pulse space-y-8">
+            <div className="h-8 w-32 bg-neutral-800 rounded-full mx-auto" />
+            <div className="h-12 w-64 bg-neutral-800 rounded-lg mx-auto" />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-96 bg-neutral-800 rounded-3xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <TechStackContent />
+    </Suspense>
   );
 } 
