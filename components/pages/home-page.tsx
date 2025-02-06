@@ -1,17 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import { Navbar } from "@/components/navbar";
-import { HeroSection } from "@/components/sections/hero-section";
-import { AICapabilities } from "@/components/sections/ai-capabilities";
-import { AIVisualization } from "@/components/sections/ai-visualization";
-import { TransformBusinessSection } from "@/components/sections/transform-business";
-import { CaseStudies } from "@/components/sections/case-studies";
-import { ROICalculator } from "@/components/sections/roi-calculator";
-import { TechStack } from "@/components/sections/tech-stack";
-import { ProcessTimeline } from "@/components/sections/process-timeline";
-import { Footer } from "@/components/sections/footer";
-import { Toaster } from "sonner";
+import dynamic from "next/dynamic";
 
 // Loading component
 function LoadingFallback() {
@@ -21,6 +11,49 @@ function LoadingFallback() {
     </div>
   );
 }
+
+// Dynamically import components
+const Navbar = dynamic(() => import("@/components/navbar"), {
+  loading: () => <LoadingFallback />
+});
+
+const HeroSection = dynamic(() => import("@/components/sections/hero-section"), {
+  loading: () => <LoadingFallback />
+});
+
+const AICapabilities = dynamic(() => import("@/components/sections/ai-capabilities"), {
+  loading: () => <LoadingFallback />
+});
+
+const AIVisualization = dynamic(() => import("@/components/sections/ai-visualization"), {
+  loading: () => <LoadingFallback />
+});
+
+const TransformBusinessSection = dynamic(() => import("@/components/sections/transform-business"), {
+  loading: () => <LoadingFallback />
+});
+
+const CaseStudies = dynamic(() => import("@/components/sections/case-studies"), {
+  loading: () => <LoadingFallback />
+});
+
+const ROICalculator = dynamic(() => import("@/components/sections/roi-calculator"), {
+  loading: () => <LoadingFallback />
+});
+
+const TechStack = dynamic(() => import("@/components/sections/tech-stack"), {
+  loading: () => <LoadingFallback />
+});
+
+const ProcessTimeline = dynamic(() => import("@/components/sections/process-timeline"), {
+  loading: () => <LoadingFallback />
+});
+
+const Footer = dynamic(() => import("@/components/sections/footer"), {
+  loading: () => <LoadingFallback />
+});
+
+const ToasterProvider = dynamic(() => import("@/components/providers/toaster-provider"));
 
 export default function HomePage() {
   return (
@@ -39,7 +72,7 @@ export default function HomePage() {
           <Footer />
         </Suspense>
       </div>
-      <Toaster position="top-center" />
+      <ToasterProvider />
     </>
   );
 } 
