@@ -1,8 +1,6 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react"
-import { unstable_noStore as noStore } from "next/cache"
-import { Metadata } from "next"
 import dynamic from "next/dynamic"
 import { Toaster } from "sonner"
 
@@ -17,22 +15,6 @@ const ROICalculator = dynamic(() => import("@/components/sections/roi-calculator
 const TechStack = dynamic(() => import("@/components/sections/tech-stack"), { ssr: false });
 const ProcessTimeline = dynamic(() => import("@/components/sections/process-timeline"), { ssr: false });
 const Footer = dynamic(() => import("@/components/sections/footer"), { ssr: false });
-
-export const metadata: Metadata = {
-  title: "Amane Soft | AI Solutions for Business",
-  description: "Transform your business with our custom AI solutions. Get enterprise-grade innovation in less than 24 hours.",
-  openGraph: {
-    title: "Amane Soft | AI Solutions for Business",
-    description: "Transform your business with our custom AI solutions. Get enterprise-grade innovation in less than 24 hours.",
-    images: ["/og-image.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Amane Soft | AI Solutions for Business",
-    description: "Transform your business with our custom AI solutions. Get enterprise-grade innovation in less than 24 hours.",
-    images: ["/og-image.png"],
-  },
-}
 
 function LoadingFallback() {
   return (
