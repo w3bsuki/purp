@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { 
   Code2,
   Server,
@@ -14,6 +15,45 @@ import {
   ExternalLink
 } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+
+const colorMap = {
+  purple: {
+    border: "border-purple-500/50",
+    bg: "bg-purple-500/10",
+    text: "text-purple-400",
+    gradient: "from-purple-500/10"
+  },
+  indigo: {
+    border: "border-indigo-500/50",
+    bg: "bg-indigo-500/10",
+    text: "text-indigo-400",
+    gradient: "from-indigo-500/10"
+  },
+  blue: {
+    border: "border-blue-500/50",
+    bg: "bg-blue-500/10",
+    text: "text-blue-400",
+    gradient: "from-blue-500/10"
+  },
+  cyan: {
+    border: "border-cyan-500/50",
+    bg: "bg-cyan-500/10",
+    text: "text-cyan-400",
+    gradient: "from-cyan-500/10"
+  },
+  teal: {
+    border: "border-teal-500/50",
+    bg: "bg-teal-500/10",
+    text: "text-teal-400",
+    gradient: "from-teal-500/10"
+  },
+  emerald: {
+    border: "border-emerald-500/50",
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    gradient: "from-emerald-500/10"
+  }
+} as const;
 
 const techStack = [
   {
@@ -150,6 +190,8 @@ export function TechStack() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {techStack.map((stack, index) => {
             const Icon = stack.icon;
+            const colors = colorMap[stack.color as keyof typeof colorMap];
+            
             return (
               <motion.div
                 key={stack.category}
@@ -177,15 +219,14 @@ export function TechStack() {
                   className="group relative h-full"
                 >
                   {/* Card Background */}
-                  <div className={
-                    `relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm transition-colors duration-300 ${
-                      hoveredCard === index ? `border-${stack.color}-500/50` : ""
-                    }`
-                  }>
+                  <div className={cn(
+                    "relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm transition-colors duration-300",
+                    hoveredCard === index && colors.border
+                  )}>
                     {/* Header */}
                     <div className="flex items-center gap-4 mb-6">
-                      <div className={`rounded-xl bg-${stack.color}-500/10 p-2.5`}>
-                        <Icon className={`h-6 w-6 text-${stack.color}-400`} />
+                      <div className={cn("rounded-xl p-2.5", colors.bg)}>
+                        <Icon className={cn("h-6 w-6", colors.text)} />
                       </div>
                       <h3 className="text-lg font-semibold text-white">
                         {stack.category}
@@ -211,14 +252,20 @@ export function TechStack() {
                               {tech.description}
                             </div>
                           </div>
-                          <ExternalLink className={`h-4 w-4 text-${stack.color}-400 opacity-0 transition-all duration-300 group-hover/item:opacity-100 group-hover/item:translate-x-1`} />
+                          <ExternalLink className={cn(
+                            "h-4 w-4 opacity-0 transition-all duration-300 group-hover/item:opacity-100 group-hover/item:translate-x-1",
+                            colors.text
+                          )} />
                         </motion.div>
                       ))}
                     </div>
 
                     {/* Hover Effects */}
                     <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className={`absolute inset-0 bg-gradient-to-br from-${stack.color}-500/10 via-transparent to-transparent`} />
+                      <div className={cn(
+                        "absolute inset-0 bg-gradient-to-br via-transparent to-transparent",
+                        colors.gradient
+                      )} />
                       <div className="absolute inset-0 backdrop-blur-[1px]" />
                     </div>
                   </div>
