@@ -26,7 +26,7 @@ const connections = [
   [0, 1], [1, 2], [2, 3], [3, 4], [4, 0], [1, 3], [0, 2]
 ];
 
-export function AIVisualization() {
+export default function AIVisualization() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeNode, setActiveNode] = useState<number | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
