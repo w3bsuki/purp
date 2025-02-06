@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Navbar } from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import { HeroSection } from "@/components/sections/hero-section";
 import { AICapabilities } from "@/components/sections/ai-capabilities";
 import { AIVisualization } from "@/components/sections/ai-visualization";
