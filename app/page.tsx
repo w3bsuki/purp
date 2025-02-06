@@ -1,16 +1,9 @@
-import { Suspense } from "react";
-import { Navbar } from "@/components/navbar";
-import { HeroSection } from "@/components/sections/hero-section";
-import { AICapabilities } from "@/components/sections/ai-capabilities";
-import { AIVisualization } from "@/components/sections/ai-visualization";
-import { TransformBusinessSection } from "@/components/sections/transform-business";
-import { CaseStudies } from "@/components/sections/case-studies";
-import { ROICalculator } from "@/components/sections/roi-calculator";
-import { TechStack } from "@/components/sections/tech-stack";
-import { ProcessTimeline } from "@/components/sections/process-timeline";
-import { Footer } from "@/components/sections/footer";
-import { ClientToaster } from "@/components/providers/client-toaster";
+"use client";
 
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+// Loading component
 function LoadingSpinner() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -18,6 +11,61 @@ function LoadingSpinner() {
     </div>
   );
 }
+
+// Dynamically import components with SSR enabled
+const Navbar = dynamic(() => import("@/components/navbar").then(mod => ({ default: mod.Navbar })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const HeroSection = dynamic(() => import("@/components/sections/hero-section").then(mod => ({ default: mod.HeroSection })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const AICapabilities = dynamic(() => import("@/components/sections/ai-capabilities").then(mod => ({ default: mod.AICapabilities })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const AIVisualization = dynamic(() => import("@/components/sections/ai-visualization").then(mod => ({ default: mod.AIVisualization })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const TransformBusinessSection = dynamic(() => import("@/components/sections/transform-business").then(mod => ({ default: mod.TransformBusinessSection })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const CaseStudies = dynamic(() => import("@/components/sections/case-studies").then(mod => ({ default: mod.CaseStudies })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const ROICalculator = dynamic(() => import("@/components/sections/roi-calculator").then(mod => ({ default: mod.ROICalculator })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const TechStack = dynamic(() => import("@/components/sections/tech-stack").then(mod => ({ default: mod.TechStack })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const ProcessTimeline = dynamic(() => import("@/components/sections/process-timeline").then(mod => ({ default: mod.ProcessTimeline })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const Footer = dynamic(() => import("@/components/sections/footer").then(mod => ({ default: mod.Footer })), {
+  ssr: true,
+  loading: () => <LoadingSpinner />
+});
+
+const ToasterProvider = dynamic(() => import("@/components/providers/client-toaster").then(mod => ({ default: mod.ClientToaster })), {
+  ssr: false
+});
 
 export default function Page() {
   return (
@@ -35,10 +83,20 @@ export default function Page() {
       </div>
 
       <div className="relative z-10">
-        <h1 className="text-4xl font-bold text-white text-center pt-20">
-          Coming Soon
-        </h1>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Navbar />
+          <HeroSection />
+          <AICapabilities />
+          <AIVisualization />
+          <TransformBusinessSection />
+          <CaseStudies />
+          <ROICalculator />
+          <TechStack />
+          <ProcessTimeline />
+          <Footer />
+        </Suspense>
       </div>
+      <ToasterProvider />
     </div>
   );
 }
