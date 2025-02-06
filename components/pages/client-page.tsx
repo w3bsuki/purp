@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar";
 import HeroSection from "@/components/sections/hero-section";
 import AICapabilities from "@/components/sections/ai-capabilities";
 import AIVisualization from "@/components/sections/ai-visualization";
-import { TransformBusinessSection } from "@/components/sections/transform-business";
+import TransformBusinessSection from "@/components/sections/transform-business";
 import { CaseStudies } from "@/components/sections/case-studies";
 import { ROICalculator } from "@/components/sections/roi-calculator";
 import { TechStack } from "@/components/sections/tech-stack";
