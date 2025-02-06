@@ -3,18 +3,11 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
-import type { Metadata } from "next"
-import MouseMoveEffect from "@/components/mouse-move-effect"
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import { ErrorBoundary } from "react-error-boundary";
 
 const inter = Inter({ subsets: ["latin"] })
-
-export const metadata: Metadata = {
-  title: "Amane Soft - Cutting-Edge Software Solutions",
-  description: "Amane Soft delivers innovative, high-performance software solutions for businesses of the future.",
-}
 
 function ErrorFallback({ error }: { error: Error }) {
   return (
@@ -38,12 +31,11 @@ function ErrorFallback({ error }: { error: Error }) {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-background text-foreground antialiased`}>
-        <MouseMoveEffect />
+      <body className={inter.className}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={
             <div className="min-h-screen bg-black flex items-center justify-center">
@@ -56,6 +48,6 @@ export default function RootLayout({
         </ErrorBoundary>
       </body>
     </html>
-  )
+  );
 }
 
