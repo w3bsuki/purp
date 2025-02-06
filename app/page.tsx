@@ -1,18 +1,4 @@
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
-
-// Client components
-const ClientHomePage = dynamic(() => import("@/components/pages/home-page"), {
-  ssr: true,
-});
-
-function LoadingSpinner() {
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
-    </div>
-  );
-}
+import HomePage from "@/components/pages/home-page";
 
 export default function Page() {
   return (
@@ -29,9 +15,7 @@ export default function Page() {
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay" />
       </div>
 
-      <Suspense fallback={<LoadingSpinner />}>
-        <ClientHomePage />
-      </Suspense>
+      <HomePage />
     </div>
   );
 }
