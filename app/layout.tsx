@@ -1,5 +1,3 @@
-"use client";
-
 import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
@@ -25,7 +23,10 @@ export const metadata: Metadata = {
   },
 };
 
-function ErrorFallback({ error }: { error: Error }) {
+// Separate client component for error handling
+const ClientErrorFallback = ({ error }: { error: Error }) => {
+  "use client";
+  
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <div className="max-w-2xl mx-auto px-4 py-8 text-center">
@@ -42,6 +43,15 @@ function ErrorFallback({ error }: { error: Error }) {
       </div>
     </div>
   );
+};
+
+// Loading component
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
+    </div>
+  );
 }
 
 export default function RootLayout({
@@ -52,12 +62,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={
-            <div className="min-h-screen bg-black flex items-center justify-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
-            </div>
-          }>
+        <ErrorBoundary FallbackComponent={ClientErrorFallback}>
+          <Suspense fallback={<LoadingSpinner />}>
             {children}
           </Suspense>
         </ErrorBoundary>
