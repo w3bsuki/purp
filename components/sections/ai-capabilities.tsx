@@ -53,7 +53,7 @@ const capabilities = [
   }
 ];
 
-export function AICapabilities() {
+export default function AICapabilities() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
