@@ -4,7 +4,6 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
 import { Suspense } from "react";
-import { Toaster } from "sonner";
 import { ErrorBoundary } from "react-error-boundary";
 import { metadata } from "./metadata";
 
@@ -55,7 +54,6 @@ export default function RootLayout({
             </div>
           }>
             {children}
-            <Toaster position="top-center" />
           </Suspense>
         </ErrorBoundary>
       </body>

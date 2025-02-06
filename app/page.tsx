@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react"
+import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { Toaster } from "sonner"
 
@@ -25,21 +25,8 @@ function LoadingFallback() {
 }
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <LoadingFallback />;
-  }
-
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Toast notifications */}
-      <Toaster position="top-center" />
-
       {/* Enhanced background effects */}
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-20 [mask-image:radial-gradient(white,transparent_85%)]" />
@@ -93,6 +80,8 @@ export default function Home() {
           <Footer />
         </Suspense>
       </div>
+
+      <Toaster position="top-center" />
     </div>
   )
 }
