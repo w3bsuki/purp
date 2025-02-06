@@ -35,20 +35,10 @@ export default function Page() {
       </div>
 
       <div className="relative z-10">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Navbar />
-          <HeroSection />
-          <AICapabilities />
-          <AIVisualization />
-          <TransformBusinessSection />
-          <CaseStudies />
-          <ROICalculator />
-          <TechStack />
-          <ProcessTimeline />
-          <Footer />
-        </Suspense>
+        <h1 className="text-4xl font-bold text-white text-center pt-20">
+          Coming Soon
+        </h1>
       </div>
-      <ClientToaster />
     </div>
   );
 }
