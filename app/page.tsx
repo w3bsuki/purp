@@ -2,7 +2,6 @@
 
 import { Suspense } from "react"
 import dynamic from "next/dynamic"
-import { Toaster } from "sonner"
 
 // Dynamically import components with no SSR
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false });
@@ -16,6 +15,11 @@ const TechStack = dynamic(() => import("@/components/sections/tech-stack"), { ss
 const ProcessTimeline = dynamic(() => import("@/components/sections/process-timeline"), { ssr: false });
 const Footer = dynamic(() => import("@/components/sections/footer"), { ssr: false });
 
+// Client components
+const ToasterProvider = dynamic(() => import("@/components/providers/toaster-provider"), {
+  ssr: false,
+});
+
 function LoadingFallback() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -26,63 +30,66 @@ function LoadingFallback() {
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-black">
-      {/* Enhanced background effects */}
-      <div className="pointer-events-none fixed inset-0">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-20 [mask-image:radial-gradient(white,transparent_85%)]" />
-        
-        {/* Animated gradient orbs */}
-        <div className="absolute right-[10%] top-[5%] h-[600px] w-[600px] animate-pulse bg-purple-500/20 blur-[120px] rounded-full" />
-        <div className="absolute left-[20%] top-[25%] h-[600px] w-[600px] animate-pulse bg-indigo-500/20 blur-[120px] rounded-full" />
-        
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay" />
+    <>
+      <div className="relative min-h-screen bg-black">
+        {/* Enhanced background effects */}
+        <div className="pointer-events-none fixed inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-20 [mask-image:radial-gradient(white,transparent_85%)]" />
+          
+          {/* Animated gradient orbs */}
+          <div className="absolute right-[10%] top-[5%] h-[600px] w-[600px] animate-pulse bg-purple-500/20 blur-[120px] rounded-full" />
+          <div className="absolute left-[20%] top-[25%] h-[600px] w-[600px] animate-pulse bg-indigo-500/20 blur-[120px] rounded-full" />
+          
+          {/* Subtle noise texture */}
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay" />
+        </div>
+
+        <div className="relative z-10">
+          <Suspense fallback={<LoadingFallback />}>
+            <Navbar />
+          </Suspense>
+          
+          <Suspense fallback={<LoadingFallback />}>
+            <HeroSection />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <AICapabilities />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <AIVisualization />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <TransformBusinessSection />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <CaseStudies />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <ROICalculator />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <TechStack />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <ProcessTimeline />
+          </Suspense>
+
+          <Suspense fallback={<LoadingFallback />}>
+            <Footer />
+          </Suspense>
+        </div>
       </div>
-
-      <div className="relative z-10">
-        <Suspense fallback={<LoadingFallback />}>
-          <Navbar />
-        </Suspense>
-        
-        <Suspense fallback={<LoadingFallback />}>
-          <HeroSection />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <AICapabilities />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <AIVisualization />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <TransformBusinessSection />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <CaseStudies />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <ROICalculator />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <TechStack />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <ProcessTimeline />
-        </Suspense>
-
-        <Suspense fallback={<LoadingFallback />}>
-          <Footer />
-        </Suspense>
-      </div>
-
-      <Toaster position="top-center" />
-    </div>
+      <Suspense fallback={null}>
+        <ToasterProvider />
+      </Suspense>
+    </>
   )
 }
 
