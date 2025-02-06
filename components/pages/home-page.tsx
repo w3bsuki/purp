@@ -1,8 +1,18 @@
 "use client";
 
+import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamically import components with loading states
+// Loading component
+function LoadingFallback() {
+  return (
+    <div className="min-h-[40vh] bg-black flex items-center justify-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500" />
+    </div>
+  );
+}
+
+// Dynamically import components
 const Navbar = dynamic(() => import("@/components/navbar"), {
   loading: () => <LoadingFallback />
 });
@@ -45,14 +55,6 @@ const Footer = dynamic(() => import("@/components/sections/footer"), {
 
 const ToasterProvider = dynamic(() => import("@/components/providers/toaster-provider"));
 
-function LoadingFallback() {
-  return (
-    <div className="min-h-[40vh] bg-black flex items-center justify-center">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500" />
-    </div>
-  );
-}
-
 export default function HomePage() {
   return (
     <>
@@ -70,16 +72,18 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10">
-          <Navbar />
-          <HeroSection />
-          <AICapabilities />
-          <AIVisualization />
-          <TransformBusinessSection />
-          <CaseStudies />
-          <ROICalculator />
-          <TechStack />
-          <ProcessTimeline />
-          <Footer />
+          <Suspense fallback={<LoadingFallback />}>
+            <Navbar />
+            <HeroSection />
+            <AICapabilities />
+            <AIVisualization />
+            <TransformBusinessSection />
+            <CaseStudies />
+            <ROICalculator />
+            <TechStack />
+            <ProcessTimeline />
+            <Footer />
+          </Suspense>
         </div>
       </div>
       <ToasterProvider />
