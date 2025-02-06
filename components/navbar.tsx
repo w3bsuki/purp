@@ -49,7 +49,7 @@ function smoothScrollTo(targetId: string) {
   }
 }
 
-export function Navbar() {
+export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
