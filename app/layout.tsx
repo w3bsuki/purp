@@ -1,14 +1,38 @@
+"use client";
+
 import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
 import type { Metadata } from "next"
 import MouseMoveEffect from "@/components/mouse-move-effect"
+import { Suspense } from "react";
+import { Toaster } from "sonner";
+import { ErrorBoundary } from "react-error-boundary";
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Amane Soft - Cutting-Edge Software Solutions",
   description: "Amane Soft delivers innovative, high-performance software solutions for businesses of the future.",
+}
+
+function ErrorFallback({ error }: { error: Error }) {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="max-w-2xl mx-auto px-4 py-8 text-center">
+        <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
+        <pre className="bg-neutral-900 p-4 rounded-lg overflow-auto text-sm mb-4">
+          {error.message}
+        </pre>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full transition-colors"
+        >
+          Try again
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function RootLayout({
@@ -20,7 +44,16 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
         <MouseMoveEffect />
-        {children}
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense fallback={
+            <div className="min-h-screen bg-black flex items-center justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
+            </div>
+          }>
+            {children}
+            <Toaster position="top-center" />
+          </Suspense>
+        </ErrorBoundary>
       </body>
     </html>
   )

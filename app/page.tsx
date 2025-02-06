@@ -1,18 +1,22 @@
-import { Suspense } from "react"
+"use client";
+
+import { Suspense, useEffect, useState } from "react"
 import { unstable_noStore as noStore } from "next/cache"
 import { Metadata } from "next"
-import Navbar from "@/components/navbar"
-import { TransformBusinessSection } from "@/components/sections/transform-business"
-import { AIAgentsSection } from "@/components/sections/ai-agents"
-import { HeroSection } from "@/components/sections/hero-section"
-import { AICapabilities } from "@/components/sections/ai-capabilities"
-import { AIVisualization } from "@/components/sections/ai-visualization"
-import { CaseStudies } from "@/components/sections/case-studies"
-import { ROICalculator } from "@/components/sections/roi-calculator"
-import { TechStack } from "@/components/sections/tech-stack"
-import { ProcessTimeline } from "@/components/sections/process-timeline"
-import { Footer } from "@/components/sections/footer"
+import dynamic from "next/dynamic"
 import { Toaster } from "sonner"
+
+// Dynamically import components with no SSR
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false });
+const HeroSection = dynamic(() => import("@/components/sections/hero-section"), { ssr: false });
+const AICapabilities = dynamic(() => import("@/components/sections/ai-capabilities"), { ssr: false });
+const AIVisualization = dynamic(() => import("@/components/sections/ai-visualization"), { ssr: false });
+const TransformBusinessSection = dynamic(() => import("@/components/sections/transform-business"), { ssr: false });
+const CaseStudies = dynamic(() => import("@/components/sections/case-studies"), { ssr: false });
+const ROICalculator = dynamic(() => import("@/components/sections/roi-calculator"), { ssr: false });
+const TechStack = dynamic(() => import("@/components/sections/tech-stack"), { ssr: false });
+const ProcessTimeline = dynamic(() => import("@/components/sections/process-timeline"), { ssr: false });
+const Footer = dynamic(() => import("@/components/sections/footer"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Amane Soft | AI Solutions for Business",
@@ -30,9 +34,24 @@ export const metadata: Metadata = {
   },
 }
 
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
+    </div>
+  );
+}
+
 export default function Home() {
-  // This opts out of static rendering for this component
-  noStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <LoadingFallback />;
+  }
 
   return (
     <div className="relative min-h-screen bg-black">
@@ -52,55 +71,43 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <Navbar />
+        <Suspense fallback={<LoadingFallback />}>
+          <Navbar />
+        </Suspense>
         
-        {/* Hero Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <HeroSection />
         </Suspense>
 
-        {/* AI Capabilities Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <AICapabilities />
         </Suspense>
 
-        {/* AI Visualization Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <AIVisualization />
         </Suspense>
 
-        {/* Transform Business Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <TransformBusinessSection />
         </Suspense>
 
-        {/* Case Studies Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <CaseStudies />
         </Suspense>
 
-        {/* ROI Calculator Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <ROICalculator />
         </Suspense>
 
-        {/* Tech Stack Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <TechStack />
         </Suspense>
 
-        {/* Process Timeline Section */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <ProcessTimeline />
         </Suspense>
 
-        {/* AI Agents Section */}
-        <Suspense>
-          <AIAgentsSection />
-        </Suspense>
-
-        {/* Footer */}
-        <Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <Footer />
         </Suspense>
       </div>
