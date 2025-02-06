@@ -1,7 +1,9 @@
+"use client";
+
 import { businessSolutions } from "@/lib/solutions";
 import { SolutionCard } from "@/components/ui/solution-card";
 
-export default async function SolutionsPage() {
+export default function SolutionsPage() {
   return (
     <div className="container max-w-screen-2xl space-y-8 py-6 lg:py-10">
       <div className="space-y-4">

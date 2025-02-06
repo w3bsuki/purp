@@ -1,3 +1,5 @@
+"use client";
+
 import { aiAgents } from "@/lib/solutions";
 import { SolutionCard } from "@/components/ui/solution-card";
 
