@@ -20,24 +20,34 @@ import { motion, AnimatePresence } from "framer-motion"
 const navItems = [
   { 
     name: "Agents", 
-    href: "/agents",
+    href: "#agents",
     description: "Meet our AI-powered digital workforce",
     icon: Star,
     badge: "New"
   },
   { 
     name: "Solutions", 
-    href: "/solutions",
+    href: "#solutions",
     description: "Explore our business solutions",
     icon: ChevronRight
   },
   { 
     name: "About", 
-    href: "/about",
+    href: "#about",
     description: "Learn about our mission",
     icon: MessageCircle
   },
 ];
+
+function smoothScrollTo(targetId: string) {
+  const targetElement = document.querySelector(targetId);
+  if (targetElement) {
+    window.scrollTo({
+      top: targetElement.getBoundingClientRect().top + window.scrollY,
+      behavior: "smooth",
+    });
+  }
+}
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -136,9 +146,9 @@ export default function Navbar() {
               {navItems.map((item, index) => {
                 const isActive = pathname === item.href;
                 return (
-                  <Link
+                  <button
                     key={item.href}
-                    href={item.href}
+                    onClick={() => smoothScrollTo(item.href)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="group relative px-4 py-2"
@@ -220,7 +230,7 @@ export default function Navbar() {
                         <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-neutral-800/50 bg-neutral-900/90" />
                       </MotionDiv>
                     </div>
-                  </Link>
+                  </button>
                 );
               })}
             </div>
@@ -318,9 +328,11 @@ export default function Navbar() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          smoothScrollTo(item.href);
+                        }}
                         className={cn(
                           "group flex items-center gap-4 rounded-xl p-3 transition-all duration-200",
                           isActive
@@ -343,7 +355,7 @@ export default function Navbar() {
                           <div className="text-sm text-neutral-500">{item.description}</div>
                         </div>
                         <ChevronRight className="ml-auto h-5 w-5 text-neutral-600 transition-transform duration-200 group-hover:translate-x-0.5" />
-                      </Link>
+                      </button>
                     </MotionDiv>
                   );
                 })}

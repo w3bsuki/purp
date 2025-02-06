@@ -8,6 +8,9 @@ import { HeroSection } from "@/components/sections/hero-section"
 import { AICapabilities } from "@/components/sections/ai-capabilities"
 import { AIVisualization } from "@/components/sections/ai-visualization"
 import { CaseStudies } from "@/components/sections/case-studies"
+import { ROICalculator } from "@/components/sections/roi-calculator"
+import { TechStack } from "@/components/sections/tech-stack"
+import { ProcessTimeline } from "@/components/sections/process-timeline"
 import { Footer } from "@/components/sections/footer"
 import { Toaster } from "sonner"
 
@@ -74,6 +77,21 @@ export default function Home() {
         {/* Case Studies Section */}
         <Suspense>
           <CaseStudies />
+        </Suspense>
+
+        {/* ROI Calculator Section */}
+        <Suspense>
+          <ROICalculator />
+        </Suspense>
+
+        {/* Tech Stack Section */}
+        <Suspense>
+          <TechStack />
+        </Suspense>
+
+        {/* Process Timeline Section */}
+        <Suspense>
+          <ProcessTimeline />
         </Suspense>
 
         {/* AI Agents Section */}

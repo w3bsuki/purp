@@ -36,7 +36,7 @@ export function AIAgentsSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative py-32 lg:py-36 overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       {/* Background Effects */}
       <div className="absolute inset-0 bg-black">
@@ -76,7 +76,7 @@ export function AIAgentsSection() {
       </div>
 
       {/* Content Container */}
-      <div className="container relative mx-auto px-4">
+      <div className="relative mx-auto max-w-7xl px-4">
         {/* Header Section */}
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
@@ -119,7 +119,7 @@ export function AIAgentsSection() {
         </div>
 
         {/* Agents Grid */}
-        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {aiAgents.map((agent, index) => {
             const Icon = agentIcons[agent.id as keyof typeof agentIcons];
             return (
@@ -129,94 +129,115 @@ export function AIAgentsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                onHoverStart={() => setActiveAgent(agent.id)}
-                onHoverEnd={() => setActiveAgent(null)}
+                className="group/card perspective-1000"
+                onMouseEnter={() => setActiveAgent(index)}
+                onMouseLeave={() => setActiveAgent(null)}
               >
-                <div className="group relative h-full">
-                  {/* Card Background with Animated Border */}
-                  <div className="absolute inset-0 rounded-3xl border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 group-hover:border-indigo-500/50">
-                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-
-                  {/* Animated Highlight Effect */}
-                  <AnimatePresence>
-                    {activeAgent === agent.id && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="absolute inset-0 rounded-3xl"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-transparent" />
-                        <div className="absolute inset-0 backdrop-blur-[1px]" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Content */}
-                  <div className="relative space-y-6 p-8">
-                    {/* Header with Animated Icon */}
-                    <div className="flex items-center gap-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        className="rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 p-3"
-                      >
-                        {Icon && <Icon className="h-8 w-8 text-indigo-400" />}
-                      </motion.div>
-                      <h3 className="text-xl font-semibold text-white">
-                        {agent.name}
-                      </h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-neutral-400">
-                      {agent.description}
-                    </p>
-
-                    {/* Features with Animated List */}
-                    <ul className="space-y-4">
-                      {agent.features.map((feature, featureIndex) => (
-                        <motion.li
-                          key={feature.title}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: featureIndex * 0.1 }}
-                          className="flex items-start gap-3"
+                <motion.div
+                  className="relative preserve-3d transition-all duration-500 [transform-style:preserve-3d]"
+                  animate={{
+                    rotateX: activeAgent === index ? 5 : 0,
+                    rotateY: activeAgent === index ? 5 : 0,
+                    scale: activeAgent === index ? 1.02 : 1,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20
+                  }}
+                >
+                  {/* Card Front */}
+                  <div className="relative h-full">
+                    <div className={cn(
+                      "relative overflow-hidden rounded-3xl border bg-neutral-900/50 p-6 backdrop-blur-sm transition-colors duration-300",
+                      activeAgent === index ? "border-indigo-500/50" : "border-neutral-800"
+                    )}>
+                      {/* Card Header */}
+                      <div className="flex items-center gap-4 mb-6">
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 p-3"
                         >
-                          <div className="mt-1 rounded-full bg-indigo-500/10 p-1">
-                            <Sparkles className="h-4 w-4 text-indigo-400" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-white">
-                              {feature.title}
-                            </div>
-                            <div className="text-sm text-neutral-400">
-                              {feature.description}
-                            </div>
-                          </div>
-                        </motion.li>
-                      ))}
-                    </ul>
+                          {Icon && <Icon className="h-8 w-8 text-indigo-400" />}
+                        </motion.div>
+                        <h3 className="text-xl font-semibold text-white">
+                          {agent.name}
+                        </h3>
+                      </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex gap-2 pt-4">
-                      <Button
-                        variant="ghost"
-                        className="flex-1 border border-neutral-800 bg-neutral-900/50 text-white hover:bg-indigo-500/10 hover:text-indigo-400"
-                      >
-                        <Phone className="mr-2 h-4 w-4" />
-                        Call
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="flex-1 border border-neutral-800 bg-neutral-900/50 text-white hover:bg-indigo-500/10 hover:text-indigo-400"
-                      >
-                        <BookOpen className="mr-2 h-4 w-4" />
-                        Learn More
-                      </Button>
+                      {/* Description */}
+                      <p className="text-neutral-400 mb-6">
+                        {agent.description}
+                      </p>
+
+                      {/* Features with 3D Effect */}
+                      <ul className="space-y-4">
+                        {agent.features.map((feature, featureIndex) => (
+                          <motion.li
+                            key={feature.title}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: (index * 0.1) + (featureIndex * 0.1) }}
+                            className="group/feature relative"
+                          >
+                            <div className="relative z-10 flex items-start gap-3 rounded-xl border border-neutral-800 bg-neutral-900/50 p-3 transition-colors duration-300 group-hover/feature:border-indigo-500/50">
+                              <div className="mt-1 rounded-lg bg-indigo-500/10 p-1">
+                                <Sparkles className="h-4 w-4 text-indigo-400" />
+                              </div>
+                              <div>
+                                <div className="font-medium text-white">
+                                  {feature.title}
+                                </div>
+                                <div className="text-sm text-neutral-400">
+                                  {feature.description}
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Feature Hover Effect */}
+                            <div className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover/feature:opacity-100">
+                              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent" />
+                              <div className="absolute inset-0 backdrop-blur-[1px]" />
+                            </div>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      {/* Action Buttons */}
+                      <div className="mt-6 flex gap-2">
+                        <Button
+                          variant="ghost"
+                          className="flex-1 border border-neutral-800 bg-neutral-900/50 text-white hover:bg-indigo-500/10 hover:text-indigo-400"
+                        >
+                          <Phone className="mr-2 h-4 w-4" />
+                          Call
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          className="flex-1 border border-neutral-800 bg-neutral-900/50 text-white hover:bg-indigo-500/10 hover:text-indigo-400"
+                        >
+                          <BookOpen className="mr-2 h-4 w-4" />
+                          Learn More
+                        </Button>
+                      </div>
+
+                      {/* Card Hover Effects */}
+                      <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover/card:opacity-100">
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent" />
+                        <div className="absolute inset-0 backdrop-blur-[1px]" />
+                      </div>
+
+                      {/* 3D Lighting Effect */}
+                      <div 
+                        className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
+                        style={{
+                          transform: "translateZ(2px)",
+                        }}
+                      />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             );
           })}
