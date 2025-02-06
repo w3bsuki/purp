@@ -6,6 +6,7 @@ import type React from "react"
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import { ErrorBoundary } from "react-error-boundary";
+import { metadata } from "./metadata";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,6 +36,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:image" content={metadata.openGraph.images[0]} />
+        <meta name="twitter:card" content={metadata.twitter.card} />
+        <meta name="twitter:title" content={metadata.twitter.title} />
+        <meta name="twitter:description" content={metadata.twitter.description} />
+        <meta name="twitter:image" content={metadata.twitter.images[0]} />
+      </head>
       <body className={inter.className}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={
