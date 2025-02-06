@@ -2,10 +2,13 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] })
+
+// Import error boundary component dynamically with no SSR
+const ErrorBoundaryClient = dynamic(() => import("@/components/error-boundary"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Amane Soft | AI Solutions for Business",
@@ -21,28 +24,6 @@ export const metadata: Metadata = {
     description: "Transform your business with our custom AI solutions. Get enterprise-grade innovation in less than 24 hours.",
     images: ["/og-image.png"],
   },
-};
-
-// Separate client component for error handling
-const ClientErrorFallback = ({ error }: { error: Error }) => {
-  "use client";
-  
-  return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <div className="max-w-2xl mx-auto px-4 py-8 text-center">
-        <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
-        <pre className="bg-neutral-900 p-4 rounded-lg overflow-auto text-sm mb-4">
-          {error.message}
-        </pre>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full transition-colors"
-        >
-          Try again
-        </button>
-      </div>
-    </div>
-  );
 };
 
 // Loading component
@@ -62,11 +43,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <ErrorBoundary FallbackComponent={ClientErrorFallback}>
+        <ErrorBoundaryClient>
           <Suspense fallback={<LoadingSpinner />}>
             {children}
           </Suspense>
-        </ErrorBoundary>
+        </ErrorBoundaryClient>
       </body>
     </html>
   );
