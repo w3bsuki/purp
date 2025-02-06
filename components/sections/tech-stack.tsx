@@ -177,13 +177,15 @@ export function TechStack() {
                   className="group relative h-full"
                 >
                   {/* Card Background */}
-                  <div className={\`relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm transition-colors duration-300 \${
-                    hoveredCard === index ? \`border-\${stack.color}-500/50\` : ""
-                  }\`}>
+                  <div className={
+                    `relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm transition-colors duration-300 ${
+                      hoveredCard === index ? `border-${stack.color}-500/50` : ""
+                    }`
+                  }>
                     {/* Header */}
                     <div className="flex items-center gap-4 mb-6">
-                      <div className={\`rounded-xl bg-\${stack.color}-500/10 p-2.5\`}>
-                        <Icon className={\`h-6 w-6 text-\${stack.color}-400\`} />
+                      <div className={`rounded-xl bg-${stack.color}-500/10 p-2.5`}>
+                        <Icon className={`h-6 w-6 text-${stack.color}-400`} />
                       </div>
                       <h3 className="text-lg font-semibold text-white">
                         {stack.category}
@@ -209,14 +211,14 @@ export function TechStack() {
                               {tech.description}
                             </div>
                           </div>
-                          <ExternalLink className={\`h-4 w-4 text-\${stack.color}-400 opacity-0 transition-all duration-300 group-hover/item:opacity-100 group-hover/item:translate-x-1\`} />
+                          <ExternalLink className={`h-4 w-4 text-${stack.color}-400 opacity-0 transition-all duration-300 group-hover/item:opacity-100 group-hover/item:translate-x-1`} />
                         </motion.div>
                       ))}
                     </div>
 
                     {/* Hover Effects */}
                     <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className={\`absolute inset-0 bg-gradient-to-br from-\${stack.color}-500/10 via-transparent to-transparent\`} />
+                      <div className={`absolute inset-0 bg-gradient-to-br from-${stack.color}-500/10 via-transparent to-transparent`} />
                       <div className="absolute inset-0 backdrop-blur-[1px]" />
                     </div>
                   </div>
