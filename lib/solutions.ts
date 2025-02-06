@@ -1,4 +1,5 @@
-import { Coins, Box, CreditCard, LucideIcon } from "lucide-react";
+import { Coins, Box, CreditCard, FileText, Bot, BarChart } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
 
 export interface Feature {
   title: string;
@@ -116,7 +117,7 @@ export const aiAgents: Solution[] = [
       }
     ],
     icon: "file-text",
-    Icon: LucideIcon
+    Icon: FileText
   },
   {
     id: "trade-assistant",
@@ -141,7 +142,7 @@ export const aiAgents: Solution[] = [
       }
     ],
     icon: "bot",
-    Icon: LucideIcon
+    Icon: Bot
   },
   {
     id: "analytics-agent",
@@ -166,6 +167,6 @@ export const aiAgents: Solution[] = [
       }
     ],
     icon: "bar-chart",
-    Icon: LucideIcon
+    Icon: BarChart
   }
 ]; 
