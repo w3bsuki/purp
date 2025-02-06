@@ -10,7 +10,7 @@ import { ArrowRight, ArrowUpRight, Sparkles, Brain, Zap, Bot } from "lucide-reac
 import { Suspense } from "react";
 import { ClientAnimations } from "@/components/client-animations";
 
-export function HeroSection() {
+export default function HeroSection() {
   return (
     <div className="relative min-h-screen flex items-center justify-center">
       <div className="absolute inset-0 flex items-center justify-center">
