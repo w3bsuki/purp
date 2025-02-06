@@ -6,6 +6,8 @@ import { TransformBusinessSection } from "@/components/sections/transform-busine
 import { AIAgentsSection } from "@/components/sections/ai-agents"
 import { HeroSection } from "@/components/sections/hero-section"
 import { AICapabilities } from "@/components/sections/ai-capabilities"
+import { AIVisualization } from "@/components/sections/ai-visualization"
+import { CaseStudies } from "@/components/sections/case-studies"
 import { Footer } from "@/components/sections/footer"
 import { Toaster } from "sonner"
 
@@ -59,9 +61,19 @@ export default function Home() {
           <AICapabilities />
         </Suspense>
 
+        {/* AI Visualization Section */}
+        <Suspense>
+          <AIVisualization />
+        </Suspense>
+
         {/* Transform Business Section */}
         <Suspense>
           <TransformBusinessSection />
+        </Suspense>
+
+        {/* Case Studies Section */}
+        <Suspense>
+          <CaseStudies />
         </Suspense>
 
         {/* AI Agents Section */}
